@@ -1,2 +1,2 @@
-# small-rust-projects
-Collection of small rust projects for learning purposes
+# small-projects
+Collection of projects in various languages for learning purposes
