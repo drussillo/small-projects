@@ -36,9 +36,21 @@ void fill_array(vector<int> &array) {
   }
 }
 
+void print_array(const vector<int> &array) {
+  cout << "[";
+  if(array.size() > 0) {
+    for(size_t i = 0; i < array.size()-1; i++) {
+      cout << array[i] << ", ";
+    }
+    cout << array[array.size()-1];
+  }
+  cout << "]" << endl;
+}
+
 int main() {
   vector<int> list;
 
+  print_array(list);
   try {
     fill_array(list);
   } catch(const runtime_error &e) {
@@ -46,7 +58,7 @@ int main() {
   } catch(const invalid_argument &e) {
     cerr << "Invalid argument: " << e.what() << endl;
   }
-
+  print_array(list);
 
   return 0;
 }
