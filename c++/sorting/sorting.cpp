@@ -47,6 +47,23 @@ void print_array(const vector<int> &array) {
   cout << "]" << endl;
 }
 
+void bubblesort(vector<int> &array) {
+  bool sorted = false;
+  int temp;
+
+  while(!sorted) {
+    sorted = true;
+    for(int i = 0; i < array.size() - 1; i++) {
+      if(array[i] > array[i + 1]) {
+        temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+        sorted = false;
+      }
+    }
+  }
+}
+
 int main() {
   vector<int> list;
 
@@ -58,6 +75,8 @@ int main() {
   } catch(const invalid_argument &e) {
     cerr << "Invalid argument: " << e.what() << endl;
   }
+  print_array(list);
+  bubblesort(list);
   print_array(list);
 
   return 0;
