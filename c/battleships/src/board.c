@@ -33,6 +33,9 @@ void printBoard(enum Cell board[BOARD_SIZE][BOARD_SIZE], bool hideShips) {
             printf(COLOR_BLUE"|"COLOR_CYAN"=");
           }
           break;
+        case SUNKEN:
+          printf(COLOR_BLUE"|"COLOR_GRAY"X");
+          break;
       }
     }
     printf(COLOR_BLUE"|\n");

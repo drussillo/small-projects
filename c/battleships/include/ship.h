@@ -33,7 +33,7 @@ char *getShipName(enum ShipType type);
 
 bool isOn(struct Ship ship, int row, int col);
 
-// If hit, applies effect to that ship and returns true. If not, returns false.
+// If hit, apply hit to that row and col. If not, apply miss. Return if hit.
 bool hit(struct Ship targetShips[5], int row, int col);
 
 bool overlaps(struct Ship ship1, struct Ship ship2);

@@ -10,6 +10,8 @@ struct Player {
   enum Cell board[10][10];
 };
 
+void updateBoard(struct Player *player);
+
 void inputShips(struct Player *player);
 
 void randomShips(struct Player *computer);

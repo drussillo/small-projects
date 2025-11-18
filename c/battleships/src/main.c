@@ -19,6 +19,8 @@ int main() {
   bool running = true;
   while(running) {
     // main loop
+    updateBoard(&player);
+    updateBoard(&computer);
     clearScreen();
     printf(COLOR_YELLOW"\n\nCOMPUTER\n");
     printBoard(computer.board, true);

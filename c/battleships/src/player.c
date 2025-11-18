@@ -8,15 +8,25 @@
 #include "utils.h"
 
 
-static void updateBoard(struct Player *player) {
+void updateBoard(struct Player *player) {
   for(int i = 0; i < player->shipCount; i++) {
     if(player->ships[i].dir == HORIZONTAL) {
       for(int j = player->ships[i].col; j < player->ships[i].col + getShipSize(player->ships[i].type); j++) {
-        player->board[player->ships[i].row][j] = SHIP;
+        if(player->board[player->ships[i].row][j] == HIT && hasSunk(player->ships[i])) {
+          player->board[player->ships[i].row][j] = SUNKEN;
+        }
+        if(player->board[player->ships[i].row][j] != HIT && player->board[player->ships[i].row][j] != SUNKEN) {
+          player->board[player->ships[i].row][j] = SHIP;
+        }
       }
     } else {
       for(int j = player->ships[i].row; j < player->ships[i].row + getShipSize(player->ships[i].type); j++) {
-        player->board[j][player->ships[i].col] = SHIP;
+        if(player->board[j][player->ships[i].col] == HIT && hasSunk(player->ships[i])) {
+          player->board[j][player->ships[i].col] = SUNKEN;
+        }
+        if(player->board[j][player->ships[i].col] != HIT && player->board[j][player->ships[i].col] != SUNKEN) {
+          player->board[j][player->ships[i].col] = SHIP;
+        }
       }
     }
   }
@@ -48,7 +58,6 @@ void inputShips(struct Player *player) {
       player->ships[currentShip].dir = VERTICAL;
     }
     player->shipCount++;
-    updateBoard(player);
   }
 }
 
@@ -87,7 +96,6 @@ void randomShips(struct Player *computer) {
 
       valid = true;
       for(int i = 0; i < currentShip; i++) {
-        // TODO this shit dont work
         if(overlaps(computer->ships[i], computer->ships[currentShip])) {
           valid = false;
           break;
@@ -96,7 +104,6 @@ void randomShips(struct Player *computer) {
     }
 
     computer->shipCount++;
-    updateBoard(computer);
   }
 }
 
