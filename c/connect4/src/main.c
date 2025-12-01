@@ -19,9 +19,15 @@ int main() {
 
     // check if won
     if(getWinner(board) != EMPTY) {
+      puts("\n\n\n\n");
       if(currentPlayer == RED) printf(COLOR_RED"Red"COLOR_RESET);
       else printf(COLOR_YELLOW"Yellow"COLOR_RESET);
-      puts(" WON!");
+      puts(" Won!");
+      break;
+    }
+    if(isTie(board)) {
+      puts("\n\n\n\n");
+      puts("Tie!");
       break;
     }
 

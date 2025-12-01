@@ -84,6 +84,19 @@ enum Square getWinner(enum Square board[6][7]) {
 }
 
 
+bool isTie(enum Square board[6][7]) {
+  for(int row = 0; row < 6; row++) {
+    for(int col = 0; col < 7; col++) {
+      if(board[row][col] == EMPTY) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+
 void clearScreen(void) {
   printf("\033[2J\033[H");
 }

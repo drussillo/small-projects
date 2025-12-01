@@ -23,6 +23,8 @@ bool addSquare(enum Square board[6][7], enum Square color, int col);
 
 enum Square getWinner(enum Square board[6][7]);
 
+bool isTie(enum Square board[6][7]);
+
 void clearScreen(void);
 
 
