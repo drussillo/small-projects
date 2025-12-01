@@ -57,20 +57,26 @@ enum Square getWinner(enum Square board[6][7]) {
   // TODO
   for(int row = 0; row < 6; row++) {
     for(int col = 0; col < 7; col++) {
-      if(board[row][col] == EMPTY) break;
+      if(board[row][col] == EMPTY) continue;
       // check horizontal
-      if(col < 4) {
-        for(int connect = 0; connect < 4; connect++) {
-          if(board[row][col + connect] != board[row][col]) break;
-          if(connect == 3) return board[row][col];
-        }
+      for(int connect = 0; connect < 4; connect++) {
+        if(col + connect > 6 || board[row][col + connect] != board[row][col]) break;
+        if(connect == 3) return board[row][col];
       }
-      if(row < 3) {
-        // check vertical
-        for(int connect = 0; connect < 4; connect++) {
-          if(board[row + connect][col] != board[row][col]) break;
-          if(connect == 3) return board[row][col];
-        }
+      // check vertical
+      for(int connect = 0; connect < 4; connect++) {
+        if(row + connect > 5 || board[row + connect][col] != board[row][col]) break;
+        if(connect == 3) return board[row][col];
+      }
+      // check diagonal (right)
+      for(int connect = 0; connect < 4; connect++) {
+        if(row + connect > 5 || col + connect > 6 || board[row + connect][col + connect] != board[row][col]) break;
+        if(connect == 3) return board[row][col];
+      }
+      // check diagonal (left)
+      for(int connect = 0; connect < 4; connect++) {
+        if(row + connect > 5 || col - connect < 0 || board[row + connect][col - connect] != board[row][col]) break;
+        if(connect == 3) return board[row][col];
       }
     }
   }
