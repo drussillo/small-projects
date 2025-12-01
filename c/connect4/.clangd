@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-I/home/dave/code/small-projects/c/connect4/include]
