@@ -10,8 +10,8 @@ int main() {
   struct Player computer;
 
   resetBoard(player.board);
-  inputShips(&player);
-  // randomShips(&player);
+  // inputShips(&player);
+  randomShips(&player);
 
   resetBoard(computer.board);
   randomShips(&computer);

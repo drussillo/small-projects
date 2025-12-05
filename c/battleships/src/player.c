@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include <ctype.h>
 
 #include "ship.h"
 #include "utils.h"
@@ -34,6 +36,7 @@ void updateBoard(struct Player *player) {
 
 
 void inputShips(struct Player *player) {
+  char input[3] = {0};
   char directionInput;
   int rowInput;
   int colInput;
@@ -43,10 +46,18 @@ void inputShips(struct Player *player) {
     clearScreen();
     printBoard(player->board, false);
     printf(COLOR_YELLOW"Enter %s direction (h/v), row (0-9), and column (0-9): "COLOR_RESET, getShipName(4 - currentShip));
-    scanf("%c %d %d", &directionInput, &rowInput, &colInput);
+    scanf("%s", input);
     flushInput(); 
+    directionInput = input[0];
+    rowInput = atoi(input + 1);
 
-    // TODO add validity check
+    if(input[0] == 0 || (input[0] != 'h' && input[0] != 'v') || input[1] == 0 || input[2] == 0 || rowInput > 99 || rowInput < 0) {
+      currentShip--;
+      continue;
+    }
+    
+    colInput = rowInput % 10;
+    rowInput = rowInput / 10;
 
     player->ships[currentShip].row = rowInput;
     player->ships[currentShip].col = colInput;
@@ -58,6 +69,7 @@ void inputShips(struct Player *player) {
       player->ships[currentShip].dir = VERTICAL;
     }
     player->shipCount++;
+    updateBoard(player);
   }
 }
 
@@ -109,13 +121,23 @@ void randomShips(struct Player *computer) {
 
 
 void inputMove(struct Player *target) {
+  char input[2];
   int attackRow;
   int attackCol;
 
-  printf(COLOR_YELLOW"Choose which enemy cell to attack (0-9 0-9): "COLOR_RESET);
-  scanf("%d %d", &attackRow, &attackCol);
-  flushInput();
-  // TODO check input validity
+  bool validInput = false;
+  while(!validInput) {
+    printf(COLOR_YELLOW"Choose which enemy cell to attack (0-9 0-9): "COLOR_RESET);
+    scanf("%s", input);
+    flushInput();
+    attackRow = atoi(input);
+    // TODO check input validity
+    // validInput = isdigit(input[0]) && isdigit(input[1]) && attackRow < 100 && attackRow >= 0;
+    validInput = true;
+  }
+
+  attackCol = attackRow % 10;
+  attackRow = attackRow / 10;
 
   if(hit(target->ships, attackRow, attackCol)) {
     target->board[attackRow][attackCol] = HIT;
