@@ -146,21 +146,30 @@ class Cube {
       double oldZ2 = Z2;
 
       // Rx
-      Y1 = Y1 * Math.cos(rotX) - Z1 * Math.sin(rotX);
-      Z1 = Y1 * Math.sin(rotX) + Z1 * Math.cos(rotX);
-      Y2 = Y2 * Math.cos(rotX) - Z2 * Math.sin(rotX);
-      Z2 = Y2 * Math.sin(rotX) + Z2 * Math.cos(rotX);
+      Y1 = oldY1 * Math.cos(rotX) - oldZ1 * Math.sin(rotX);
+      Z1 = oldY1 * Math.sin(rotX) + oldZ1 * Math.cos(rotX);
+      Y2 = oldY2 * Math.cos(rotX) - oldZ2 * Math.sin(rotX);
+      Z2 = oldY2 * Math.sin(rotX) + oldZ2 * Math.cos(rotX);
 
       // Ry
+      oldX1 = X1;
+      oldZ1 = Z1;
+      oldX2 = X2;
+      oldZ2 = Z2;
       X1 = oldX1 * Math.cos(rotY) + oldZ1 * Math.sin(rotY);
       Z1 = -oldX1 * Math.sin(rotY) + oldZ1 * Math.cos(rotY);
       X2 = oldX2 * Math.cos(rotY) + oldZ2 * Math.sin(rotY);
       Z2 = -oldX2 * Math.sin(rotY) + oldZ2 * Math.cos(rotY);
 
-      // TODO: implement Z rotation
       // Rz
-      // X = X * Math.cos(angle) - Y * Math.sin(angle);
-      // Y = X * Math.sin(angle) + Y * Math.cos(angle);
+      oldX1 = X1;
+      oldY1 = Y1;
+      oldX2 = X2;
+      oldY2 = Y2;
+      X1 = oldX1 * Math.cos(rotZ) - oldY1 * Math.sin(rotZ);
+      Y1 = oldX1 * Math.sin(rotZ) + oldY1 * Math.cos(rotZ);
+      X2 = oldX2 * Math.cos(rotZ) - oldY2 * Math.sin(rotZ);
+      Y2 = oldX2 * Math.sin(rotZ) + oldY2 * Math.cos(rotZ);
 
 
       // translate
@@ -214,10 +223,11 @@ public class Main extends Application {
       double Y = 0;
       double Z = 150;
       double delta = 1.0;
+      double velocity = 0;
       double angleX = 0.0;
       double angleY = 0.0;
       double angleZ = 0.0;
-      double deltaAngle = +0.010;
+      double deltaAngle = +0.020;
 
       public void handle(long currentNanoTime) {
         gc.clearRect(-ScreenW/2, -ScreenH/2, ScreenW, ScreenH);
@@ -226,12 +236,19 @@ public class Main extends Application {
         // X+=delta;
         // Y+=delta;
         // Z+=delta;
-        // angleX+=deltaAngle;
-        // angleY+=deltaAngle;
+
+        // Z+=delta * velocity;
+        // velocity += 0.01;
+        // if(velocity > 2.5) velocity *= -1;
+
+        angleX+=deltaAngle;
+        angleY+=deltaAngle;
         angleZ+=deltaAngle;
 
-        Cube c1 = new Cube(100, 100, 100, X, Y, Z, angleX, angleY, angleZ);
+        Cube c1 = new Cube(100, 100, 100, X+60, Y, Z, angleX, angleY, angleZ);
+        Cube c2 = new Cube(100, 100, 100, X-60, Y, Z, angleX, angleY, angleZ);
         c1.draw(gc, d);
+        c2.draw(gc, d);
 
 
         // Z += deltaZ;
